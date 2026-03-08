@@ -1,0 +1,16 @@
+services:
+  radar:
+    build: .
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radar.rule=Host(`radar.hubnutrs.com.br`)"
+      - "traefik.http.routers.radar.entrypoints=websecure"
+      - "traefik.http.routers.radar.tls.certresolver=letsencrypt"
+      - "traefik.http.services.radar.loadbalancer.server.port=80"
+    networks:
+      - doca-cloud
+
+networks:
+  doca-cloud:
+    external: true
